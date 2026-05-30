@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment variables
+.env
+backend/.env
+ML_Models/.env
+secret/
+*/secret/
+
+# Virtual environment
+venv/
+.venv/
+temp_env/
+
+# Editor
+.idea/
+.vscode/
+.DS_Store
+.qodo
+
+# Logs
+*.log
+SCO_LOG/
+ML_Models/SCO_LOG/
+
+# Data files
+/data
+/Data.csv
+
+# Model files
+*.pkl
+*.h5
+*.keras
+mlruns/
+ML_Models/experiments/scripts/mlruns/
+ML_Models/experiments/experiments/mlruns/
+
+# Coverage and testing
+.coverage
+.pytest_cache/
+
+# Node / Frontend (excluded from this repo)
+node_modules/
+.next/
+build/
+dist/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+
+# Jupyter
+.ipynb_checkpoints/
