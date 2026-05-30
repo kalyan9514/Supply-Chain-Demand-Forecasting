@@ -1,0 +1,40 @@
+# Model training
+tensorflow==2.18.0
+keras-tuner==1.4.7
+torch>=2.0.0
+
+# XGBoost and optimization
+xgboost==3.0.0
+optuna==4.2.1
+
+# Experiment tracking
+mlflow==2.21.0
+
+# Explainability
+shap==0.47.0
+
+# Data processing
+pandas==2.2.3
+numpy==1.26.4
+scikit-learn==1.5.2
+polars==1.25.2
+scipy>=1.11.0
+
+# Cloud
+google-cloud-storage==2.19.0
+google-cloud-aiplatform==1.85.0
+google-cloud-monitoring>=2.0.0
+cloud-sql-python-connector==1.17.0
+pymysql==1.1.0
+sqlalchemy==2.0.25
+
+# API
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+
+# Utilities
+python-dotenv==1.0.1
+ipython==8.28.0
+statsmodels==0.14.4
+matplotlib==3.9.2
+seaborn>=0.12.0
