@@ -1,0 +1,2 @@
+Infrastructure/*.tf linguist-language=HCL
+bootstrap/*.tf linguist-language=HCL
