@@ -1,0 +1,62 @@
+# .github/workflows/airflow.yml
+# Deploys Airflow to a GCP Compute Engine VM on pushes
+# to the ml-models-meet branch or manual trigger.
+
+name: Deploy Airflow to Compute Engine
+
+on:
+  push:
+    branches: [ml-models-meet]
+  workflow_dispatch:
+    inputs:
+      deployment_target:
+        description: "Where to deploy Airflow"
+        required: true
+        default: "compute_engine"
+        type: choice
+        options:
+          - compute_engine
+
+jobs:
+  deploy-airflow:
+    name: Deploy Airflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true
+
+      - name: Configure SSH key
+        run: bash scripts/configure_ssh.sh
+        env:
+          VM_NAME: ${{ secrets.VM_NAME }}
+          VM_ZONE: ${{ secrets.VM_ZONE }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+
+      - name: Ensure VM is running
+        run: bash scripts/setup_vm.sh
+        env:
+          VM_NAME: ${{ secrets.VM_NAME }}
+          VM_ZONE: ${{ secrets.VM_ZONE }}
+
+      - name: Sync project files to VM
+        run: bash scripts/sync_files.sh
+        env:
+          VM_NAME: ${{ secrets.VM_NAME }}
+          VM_ZONE: ${{ secrets.VM_ZONE }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+
+      - name: Deploy Airflow on VM
+        run: bash scripts/deploy_airflow.sh
+        env:
+          VM_NAME: ${{ secrets.VM_NAME }}
+          VM_ZONE: ${{ secrets.VM_ZONE }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+          
